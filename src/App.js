@@ -1,35 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import './App.css';
-import Review from "./components/Review";
+import Panel from "./components/Panel";
 import Timer from "./components/Timer";
 
-const data = [
-  {
-    id: 1,
-    title: "First Timer",
-    initial: 3789,
-    isRunning: "false",
-  },
-  {
-    id: 2,
-    title: "Second Timer",
-    initial: 128,
-    isRunning: "false",
-  },
-];
-
 function App() {
+  const [data, setData] = useState([]);
+
+  const addTimer = () => {
+    setData([
+      ...data,
+      {
+        id: Date.now(),
+        title: "Unnamed " + data.length,
+        initial: 0,
+        isRunning: false,
+      },
+    ]);
+  };
+
+  const deleteTimer = (id) => {
+    setData(
+      data.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-          <div className="container">
-            <h1>MyTimers</h1>
-            <Review />
+        <div className="container">
+          <h1>MyTimers</h1>
+          <Panel data={data} onAddTimer={addTimer} />
         </div>
       </header>
       <main>
         <div className="container">
-          {data.map((el) => <Timer key={el.id} timerData={el}/>)}
+          {data.length
+            ? data.map((el) => (
+                <Timer key={el.id} timerData={el} onDeleteTimer={deleteTimer} />
+              ))
+            : "No timers"}
         </div>
       </main>
     </div>
