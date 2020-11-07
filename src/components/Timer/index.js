@@ -6,10 +6,6 @@ function Timer(props) {
     return str.length === 1 ? "0" + str : str;
   };
 
-  const runningHandler = (target) => {
-    console.log(target);
-  };
-
   const timeView = (sec) => {
     const time = {
       hours: addNull(String(Math.floor(sec / 3600))),
@@ -18,20 +14,30 @@ function Timer(props) {
     };
     return `${time.hours} : ${time.minutes} : ${time.seconds}`;
   };
+
     const handleClick = (id) => {
         props.onDeleteTimer(id);
     }
-  return (
 
+    const runningHandler = (id) => {
+      props.onToggleRun(id);
+    };
+
+  return (
     <div className="Timer-item">
       <div className="timer-header">{title}</div>
       <div className="timer-body">{timeView(initial)}</div>
       <div className="timer-footer">
-        <button className="toggle-run" onClick={(e) => runningHandler(e)}>
+        <button
+          className="toggle-run"
+          onClick={() => runningHandler(id)}
+        >
           {!isRunning ? "Start" : "Stop"}
         </button>
         <button className="reset">Reset</button>
-        <button className="delete" onClick={() => handleClick(id)}>Delete</button>
+        <button className="delete" onClick={() => handleClick(id)}>
+          Delete
+        </button>
       </div>
     </div>
   );

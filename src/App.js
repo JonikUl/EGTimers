@@ -12,7 +12,7 @@ function App() {
       {
         id: Date.now(),
         title: "Unnamed " + data.length,
-        initial: 0,
+        initial: 1800,
         isRunning: false,
       },
     ]);
@@ -21,6 +21,16 @@ function App() {
   const deleteTimer = (id) => {
     setData(
       data.filter((item) => item.id !== id));
+  };
+
+  const toggleRunningTimer = (id) => {
+    setData(
+      data.map((item) => {
+        return item.id === id
+          ? Object.assign(item, { isRunning: !item.isRunning })
+          : item;
+      })
+    );
   };
 
   return (
@@ -35,7 +45,12 @@ function App() {
         <div className="container">
           {data.length
             ? data.map((el) => (
-                <Timer key={el.id} timerData={el} onDeleteTimer={deleteTimer} />
+                <Timer
+                  key={el.id}
+                  timerData={el}
+                  onDeleteTimer={deleteTimer}
+                  onToggleRun={toggleRunningTimer}
+                />
               ))
             : "No timers"}
         </div>

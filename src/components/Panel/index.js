@@ -1,6 +1,6 @@
 import React from "react";
 
-function Review(props) {
+function Panel(props) {
   const handleClick = () => props.onAddTimer();
   return (
     <div className="Review">
@@ -18,4 +18,4 @@ function Review(props) {
   );
 }
 
-export default Review;
+export default Panel;
